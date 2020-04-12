@@ -23,11 +23,14 @@ var corsOptions = {
 app.use(cors());
 
 app.use(logger('dev'));
+
 // parse application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: false }))
 
 // // parse application/json
-// app.use(bodyParser.json())
+// app.use(bodyParser.json());
+
+app.use(express.static('public'));
 
 /* ROUTES */
 
