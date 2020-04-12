@@ -1,4 +1,5 @@
 require('dotenv').config();
+var cors = require('cors');
 var createError = require('http-errors');
 var express = require('express');
 var logger = require('morgan');
@@ -8,13 +9,29 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+var whitelist = [/\.localhost\$/];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(cors());
+
 app.use(logger('dev'));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
-app.use(bodyParser.json())
+// // parse application/json
+// app.use(bodyParser.json())
 
+/* ROUTES */
+
+app.options('*', cors()) // include before other routes
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
