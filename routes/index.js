@@ -7,8 +7,12 @@ var router = express.Router();
 
 const UPLOAD_PATH = '/Users/val/liveset-backend/public/uploads/';
 
+
 router.get('/', function(req, res, next) {
-  res.send("Alive");
+  fs.readdir(UPLOAD_PATH, function(error, files) {  
+    var totalFiles = files.length - 1; // return the number of files
+    res.send({name: totalFiles + ".webm"})
+  });
 });
 
 /* GET latest audio file. */
@@ -17,9 +21,12 @@ router.get('/audio', function(req, res, next) {
 });
 
 router.post('/audio', upload.single('soundBlob'), function (req, res, next) {
-  console.log(req.file)
-  fs.writeFileSync(UPLOAD_PATH + 'latest.webm', Buffer.from(new Uint8Array(req.file.buffer)));
-  res.sendStatus(200);
+  fs.readdir(UPLOAD_PATH, function(error, files) {  
+    var totalFiles = files.length; // return the number of files
+    const filename = totalFiles + ".webm";
+    fs.writeFileSync(UPLOAD_PATH + filename, Buffer.from(new Uint8Array(req.file.buffer)));
+    res.sendStatus(200);
+  });
 
 })
 

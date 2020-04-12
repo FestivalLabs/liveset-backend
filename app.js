@@ -28,7 +28,7 @@ app.use(logger('dev'));
 // app.use(bodyParser.urlencoded({ extended: false }))
 
 // // parse application/json
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
