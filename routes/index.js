@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET latest audio file. */
 router.get('/', function(req, res, next) {
-  res.send("Alive")
+  res.status(200).send("Here is your audio file");
+});
+
+router.post('/', function(req, res, next) {
+  res.sendStatus(200);
 });
 
 module.exports = router;
